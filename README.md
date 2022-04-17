@@ -76,10 +76,7 @@ $$bleu_n=\displaystyle\frac{\sum_{c\in candidates}\sum_{n-gram\in c} Count_{clip
 
 2、为每一个$\omega_k$计算TF-IDF权重：
 
-$$
-g_k(s_{ij})=\displaystyle\frac{h_k(s_{ij})}{\sum_{w_l\in\Omega}h_l(s_{ij})}log(\displaystyle\frac{|I|}{\sum_{I_p\in I}min(1,\sum_qh_k(s_{pq})})
-
-$$
+$$g_k(s_{ij})=\displaystyle\frac{h_k(s_{ij})}{\sum_{w_l\in\Omega}h_l(s_{ij})}log(\displaystyle\frac{|I|}{\sum_{I_p\in I}min(1,\sum_qh_k(s_{pq})})$$
 
 其中$\omega_k$代表某一个$n-gram$，$s_{ij}$代表第$i$个图像的第$j$个语句，其出现次数为$h_k(s_{ij}$，$\Omega$代表全部$n-gram$集合。
 
@@ -101,17 +98,11 @@ $$CIDEr_n(c_i,S_i)=\displaystyle\frac{1}{m}\displaystyle\sum_j\displaystyle\frac
 
 一种基于模型caption与答案word-to-word映射的考虑精确率和召回率的指标：
 
-$$
-P=\displaystyle\frac{mapped}{total_s},R=\displaystyle\frac{mapped}{total_r}
-
-$$
+$$P=\displaystyle\frac{mapped}{total_s},R=\displaystyle\frac{mapped}{total_r}$$
 
 其中$mapped$代表对应上的词语个数，$total_s$代表模型生成句子的词语总个数，$total_r$代表参考译文中的词语总个数，其最终的结果为二者的调和平均，并使用$Penalty$来调整：
 
-$$
-F_{means}=\displaystyle\frac{10PR}{R+9P},Score=F_{means}\times(1-Penalty)
-
-$$
+$$F_{means}=\displaystyle\frac{10PR}{R+9P},Score=F_{means}\times(1-Penalty)$$
 
 其中$Penalty$为句子在更宏观尺度上的流畅度度量，对更大的$n-gram$时匹配效果更好的caption，其$Penalty$更小。
 
@@ -123,10 +114,7 @@ $$
 
 ROUGE-L主要计算的是最长公共子序列的F-measure:
 
-$$
-R_{lcs}=\displaystyle\frac{LCS(X,Y)}{m},P_{lcs}=\displaystyle\frac{LCS(X,Y)}{n},F_{lcs}=\displaystyle\frac{(1+\beta^2)R_{lcs}P_{lcs}}{R_{lcs}+\beta^2P_{lcs}}
-
-$$
+$$R_{lcs}=\displaystyle\frac{LCS(X,Y)}{m},P_{lcs}=\displaystyle\frac{LCS(X,Y)}{n},F_{lcs}=\displaystyle\frac{(1+\beta^2)R_{lcs}P_{lcs}}{R_{lcs}+\beta^2P_{lcs}}$$
 
 其中$X，Y$表示的是模型生成句子和参考译文。$m,n$分别表示它们的长度。当有多个参考译文时，**挑选最高分数**作为最终的评判分数。
 
@@ -176,10 +164,7 @@ WordPiece算法可以看做是BPE的变种，不同点在于，WordPiece基于�
 
 第4步的具体解释：对于一个由$n$个子词$t_i$组成的句子$S=(t_1,t_2,\dots,t_n)$，假设子词独立，则句子$S$的似然值等于子词似然的乘积：$logP(s)=\displaystyle\sum_{i=1}^nlogP(l_i)$，假设将两个相邻位置$x,y$子词合并为子词$z$，则原句似然值变化量可表示为：
 
-$$
-\Delta logP(S)=logP(l_z)-(logP(l_x)+logP(l_y))=log\displaystyle\frac{P(l_z)}{P(l_x)P(l_y)}
-
-$$
+$$\Delta logP(S)=logP(l_z)-(logP(l_x)+logP(l_y))=log\displaystyle\frac{P(l_z)}{P(l_x)P(l_y)}$$
 
 可以看出似然值的变化即两子词互信息，则合并的两子词需具有最大的互信息，其在句子中的关联性最强。
 
@@ -337,10 +322,7 @@ Vision Language Pretrain 一般包含三个关键技术：特征提取、特征�
 
 本文提出的OSCAR模型在传统VLP的Linguistic、Visual输入的基础上，推出了Object Tag Input的三模态输入$(w,q,v)$，文中还提出了两种视角下的训练任务，包括Dictionary View与Modality View（想不到好翻译）：
 
-$$
-x\overset{\underset{\Delta}{}}{=}[w,(q,v)]=[(w,q),v]\overset{\underset{\Delta}{}}{=}x’
-
-$$
+$$x\overset{\underset{\Delta}{}}{=}[w,(q,v)]=[(w,q),v]\overset{\underset{\Delta}{}}{=}x’$$
 
 其中w为使用Pretrained BERT编码的Caption特征，q为ROI Tag特征，v为图像特征，q与v生成的是通过调用Pretrained Faster R-CNN来进行的，对于q使用与w相同的BERT进行编码，对于有相似语义的词其在空间中的特征向量也必然是相近的，会因此得到更高的注意力权重，对于v，本文使用了将Position Embedding concatenate在Visual Embedding后面的方法，这个还是挺有意思的（虽然我感觉会导致一个4-6维特征淹没在Visual Embedding的2048维特征中），之后使用一个FC来调整维度；
 
@@ -425,10 +407,7 @@ xGQA里提到了cue到了OSCAR+，所以掉头回来复习一下，结果OSCAR+�
 
 很短的一篇文章，其思路就是通过引入其他模态信息的方式，实现对机器翻译能力的提升；文中指出虽然通过引入视觉信息来辅助文本翻译任务，文本和视觉信息在模型中并不是等价的，文本相对视觉特征来说更为重要，所以在模型的结构上，Transformer的Query生成依靠Vision +Language，而Key与Value则仅仅使用Linguistic Information，输出如下：
 
-$$
-c_i=\displaystyle\sum_{j=1}
-
-$$
+$$c_i=\displaystyle\sum_{j=1}$$
 
 #### [ACL2020] Unsupervised Multimodal Neural Machine Translation with Pseudo Visual Pivoting
 
