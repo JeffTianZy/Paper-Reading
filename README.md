@@ -413,6 +413,32 @@ $$c_i=\displaystyle\sum_{j=1}^n\alpha_{ij}(x_j^{text}W^V), \alpha_{ij}=softmax(\
 
 #### [ACL2020] Unsupervised Multimodal Neural Machine Translation with Pseudo Visual Pivoting
 
+好消息：想到一个Idea；坏消息：找到了这个Idea。
+
+基于没有双语语料库的Pseudo Target Training，在EN-GR上实现的机器翻译，使用图像作为引导，抽象了一堆数学表示：
+
+$$
+L_{xy}^{MBT}=E_{x,z_x}(-logp_{yz\to x}(x|g^*(x,z_x),z_x))+E_{y,z_y}(-logp_{xz\to y}(y|h^*(y,z_y),z_y))
+$$
+
+其中$x$是源语言EN、$y$是目标语言GR的Caption，$z$是对应语言的图像，$g^*(x,z_x)=argmaxp_{xz\to y}(y|x,z_x)$代表着生成伪句的条件，本文用两种方法建立语言之间的关系，第一种是使用图片作为引导，第二种是基于生成的伪句构成{源语言-图像-目标语言}对。
+
+对于图片引导的方法(Visual-semantic Embedding)，使用Encoder将文本与图像（FasterRCNN）编码成tokens，定义文本token$h_i^x$图像oken$h_j^z$相似度$s_{ij}=cos(h_i^x,h_j^z)$，使用相似度加权的方法获得图像的文本特征$h_j^{zx}=\displaystyle\sum_{i=1}^Nsoftmax_i(s_{ij})h_i^x$与文本的图像特征$h_i^{xz}$，最终的图像文本相似度被定义为$S(x,z)=\displaystyle\frac{1}{2K}\sum_{j=1}^Kcos(h_j^{zx},h_j^z)+\displaystyle\frac{1}{2N}\sum_{i=1}^Ncos(h_i^{xz},h_i^x)$，损失为：
+
+$$
+L_c(x,z)=max_{\hat{x}}(\gamma-S(x,z)+S(\hat{x},z))_++max_{\hat{z}}(\gamma-S(x,z)+S(x,\hat{z}))_+
+$$
+
+$\hat{x}$代表负样本，当损失减少时，正样本对的距离将被拉近，负样本距离将会越拉越远。
+
+对于另一条路线，也就是生成伪句，本文使用基于图片的Image Captioning来完成，传统的Loss被定义为：
+
+$$
+L_{z\to x}^{CAP}=E_{(z_x,x)}(-logp_{z\to x}(x|z_x))
+$$
+
+本文基于单向生成（{EN, Image, pGR}或{pEN,Image,GR}）与双向生成({pEN,Image,pGR})来定义了两个双向翻译损失，公示实在是太长了就不打了，总之就是把这四个Loss放在一起train就可以work。
+
 #### [CVPR2021] M3P: Learning Universal Representations via Multitask Multilingual Multimodal Pre-training
 
 作者指出近些年提出了许多预训练大模型，包括传统的Monolingual BERT、GPT系列，Multilingual MBERT、Unicoder，Multimodal ViLBERT、UNITER等，然而对于多语种、多模态的预训练任务还没有被深入研究，本文提出一种Multitask, Multilingual, Multimodal Pretrained Model(M3P)，来对这一领域进行探索；
