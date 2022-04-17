@@ -409,6 +409,8 @@ xGQA里提到了cue到了OSCAR+，所以掉头回来复习一下，结果OSCAR+�
 
 $$c_i=\displaystyle\sum_{j=1}^n\alpha_{ij}(x_j^{text}W^V), \alpha_{ij}=softmax(\displaystyle\frac{(x_iW^Q)(x_j^{text}W^K)^T}{\sqrt{d}})$$
 
+本文的文本Encoder选择300维的Glove，图像Encoder使用ResNet50的最后一层空间特征作为输入，并在Transformer上选择6层300维输入的Encoder与Decoder来实现图像引导的文本翻译。
+
 #### [ACL2020] Unsupervised Multimodal Neural Machine Translation with Pseudo Visual Pivoting
 
 #### [CVPR2021] M3P: Learning Universal Representations via Multitask Multilingual Multimodal Pre-training
