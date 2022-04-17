@@ -405,9 +405,9 @@ xGQA里提到了cue到了OSCAR+，所以掉头回来复习一下，结果OSCAR+�
 
 #### [ACL2020] Multimodal Transformer for Multimodal Machine Translation
 
-很短的一篇文章，其思路就是通过引入其他模态信息的方式，实现对机器翻译能力的提升；文中指出虽然通过引入视觉信息来辅助文本翻译任务，文本和视觉信息在模型中并不是等价的，文本相对视觉特征来说更为重要，所以在模型的结构上，Transformer的Query生成依靠Vision +Language，而Key与Value则仅仅使用Linguistic Information，输出如下：
+很短的一篇文章，其思路就是通过引入其他模态信息的方式，实现对机器翻译能力的提升；文中指出在Transformer 中，每一个词的表示都是在自注意力过程中由所有词共同产生。因此，如果我们把每一个词看成一个结点，那么 Transformer 就可以看成是图神经网络的一个变体，每一句话都是一个全相连的图。虽然通过引入视觉信息来辅助文本翻译任务，文本和视觉信息在模型中并不是等价的，文本相对视觉特征来说更为重要，所以在模型的结构上，Transformer的Query生成依靠Vision +Language，而Key与Value则仅仅使用Linguistic Information，输出如下：
 
-$$c_i=\displaystyle\sum_{j=1}$$
+$$c_i=\displaystyle\sum_{j=1}^n\alpha_{ij}(x_j^{text}W^V), \alpha_{ij}=softmax(\displaystyle\frac{(x_iW^Q)(x_j^{text}W^K)^T}{\sqrt{d}})$$
 
 #### [ACL2020] Unsupervised Multimodal Neural Machine Translation with Pseudo Visual Pivoting
 
