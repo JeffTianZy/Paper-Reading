@@ -56,10 +56,7 @@
 
 是IBM在2002提出的，用于机器翻译任务的评价指标。
 
-$$
-bleu_n=\displaystyle\frac{\sum_{c\in candidates}\sum_{n-gram\in c} Count_{clip}(n-gram)}{\sum_{c\in candidates}\sum_{n-gram\in c} Count(n-gram')}
-
-$$
+$$bleu_n=\displaystyle\frac{\sum_{c\in candidates}\sum_{n-gram\in c} Count_{clip}(n-gram)}{\sum_{c\in candidates}\sum_{n-gram\in c} Count(n-gram')}$$
 
 其中$n-gram$代表连续判据的连续单词数，$n=1$时为单词级别的准确性，高阶$n$可以衡量句子的流畅度。
 
@@ -90,10 +87,7 @@ $$
 
 3、计算$CIDEr$分数：
 
-$$
-CIDEr_n(c_i,S_i)=\displaystyle\frac{1}{m}\displaystyle\sum_j\displaystyle\frac{g^n(c_i)g^n(s_{ij})}{||g^n(c_i)||||g^n(s_{ij})||}
-
-$$
+$$CIDEr_n(c_i,S_i)=\displaystyle\frac{1}{m}\displaystyle\sum_j\displaystyle\frac{g^n(c_i)g^n(s_{ij})}{||g^n(c_i)||||g^n(s_{ij})||}$$
 
 其中，$\omega_k$在某个“候选语句”c_i(表示针对第$i$个图像，模型生成的语句)中出现的次数表示为$h_k(c_i)$，$g^n(c_i)$代表长度为n的$n-gram$的权值向量。
 
