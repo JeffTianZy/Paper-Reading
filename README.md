@@ -48,6 +48,7 @@
 
 - [ ] [Arxiv2022] Visual Prompt Tuning
 - [ ] [Arxiv2022] Domain Adaptation via Prompt Learning
+- [ ] [Arxiv2022] Visual Prompting: Modifying Pixel Space to Adapt Pre-trained Models
 
 ## 笔记
 
