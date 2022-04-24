@@ -44,6 +44,11 @@
 - [X]  Wukong: 100 Million Large-scale Chinese Cross-modal Pre-training Dataset and A Foundation Framework
 - [X]  Delving Deeper into Cross-lingual Visual Question Answering
 
+### Visual Prompt
+
+- [ ] [Arxiv2022] Visual Prompt Tuning
+- [ ] [Arxiv2022] Domain Adaptation via Prompt Learning
+
 ## 笔记
 
 #### 一些评价指标
