@@ -44,9 +44,9 @@
 - [x] Wukong: 100 Million Large-scale Chinese Cross-modal Pre-training Dataset and A Foundation Framework
 - [x] Delving Deeper into Cross-lingual Visual Question Answering
 
-### Visual Prompt
+### [Visual Prompt](#PROMPT)
 
-- [ ] [Arxiv2022] Visual Prompt Tuning
+- [x] [Arxiv2022] Visual Prompt Tuning
 - [ ] [Arxiv2022] Domain Adaptation via Prompt Learning
 - [ ] [Arxiv2022] Visual Prompting: Modifying Pixel Space to Adapt Pre-trained Models
 
@@ -558,5 +558,29 @@ Google的文章，充斥着暴力美学。文章指出现有工作都是基于�
 </div>
 
 对于fine-tune方法，本文提出了两种：1、Freezing Text Embeddings(FT)与2、Self-Bootstrapping(SB)；前者冻住Text Embedding Layers，仅对Transformer与Classification Head进行优化；而后者作者指出zero-shot fine-tune对于权重初始化非常敏感，而如果Classifier Head已经优化的前提下，对于权重则没那么敏感，该方法在FT的基础上对Transformer的权重进行的reset并对$f_{trans}$的权重进行了初始化，冻结Embedding和Head的权重进行fine-tune；可以看到模型在VQA上的表现在加入了QType+SB的情况下表现提升十分明显。
+
+<span id="PROMPT">
+
+## Visual Prompt
+
+</span>
+
+#### [Arxiv2022] Visual Prompt Tuning
+
+文章首先总结了目前常用的大模型Fine-tuning策略，几乎都是对模型的一部分参数进行微调，包括Classification Head或部分Backbone，也有的回填艰辛的Adapter来适应新的任务，作者指出这些方法没有全局Fine-Tuning的表现好，而全局方法又过于Inefficient。本文提出了一种新的Fine-tuning策略，其Idea来源于GPT-3的Prompting，通过改变输入的方法在输入处引入一小部分learnable parameters，这一小部分参数学习代价较低，但是能有效地指导模型。
+
+<div style="text-align: center;">
+
+<img src="./images/vpt.png" width="800" height="XXX" />
+
+</div>
+
+模型分为VPT-Deep与VPT-Shallow，二者都是在输入中加入了一串可学习的Embedding Tokens，将整个网络冻结，并在输出端加入一个可学习的Head，对于Shallow来说只在网络最初的输入时加入这个Learnable Tokens，而Deep版本则是每一层Transformer都会加入，但是同时会抛弃上一层Learnable Tokens位置的输出。
+
+这种简单的Prompt Tuning的方法即保证了微调的参数量很小，同时保证了很强的模型表现（在部分模型上甚至超过了Fully-Tuned）。
+
+#### [Arxiv2022] Domain Adaptation via Prompt Learning
+
+#### [Arxiv2022] Visual Prompting: Modifying Pixel Space to Adapt Pre-trained Models
 
 
