@@ -4,45 +4,45 @@
 
 ### [Image/Video Captioning](#IVC)
 
-- [X]  Say As You Wish: Fine-Grained Control of Image Caption Generation With Abstract Scene Graphs
-- [X]  Context-Aware Group Captioning via Self-Attention and Contrastive Features
-- [X]  More Grounded Image Captioning by Distilling Image-Text Matching Model
+- [x] Say As You Wish: Fine-Grained Control of Image Caption Generation With Abstract Scene Graphs
+- [x] Context-Aware Group Captioning via Self-Attention and Contrastive Features
+- [x] More Grounded Image Captioning by Distilling Image-Text Matching Model
 
 ### [Image/Video-Text](#IVT)
 
-- [X]  ActBERT: Learning Global-Local Video-Text Representations
-- [X]  Context-Aware Attention Network for Image-Text Retrieval
+- [x] ActBERT: Learning Global-Local Video-Text Representations
+- [x] Context-Aware Attention Network for Image-Text Retrieval
 
 ### [Vision Language Pretrain](#VLP)
 
-- [X]  [多模态预训练模型综述](https://zhuanlan.zhihu.com/p/435697429)
-- [X]  [NeurIPS2019] ViLBERT: Pretraining Task-Agnostic Visiolinguistic Representations for Vision-and-Language Tasks
-- [X]  Fusion of Detected Objects in Text for Visual Question Answering
-- [X]  [EMNLP2019] LXMERT: Learning Cross-Modality Encoder Representations from Transformers
-- [X]  VISUALBERT: A Simple And Performant Baseline For Vision And Language
-- [X]  [AAAI2020] Unicoder-VL: A Universal Encoder for Vision and Language by Cross-modal Pre-training
-- [X]  [ICLR2020] VL-BERT: Pretraining of Generic Visuallinguistic Representations
-- [X]  [ECCV2020] UNITER: UNiversal Image-TExt Representation Learning
-- [X]  [ECCV2020] Oscar: Object-Semantics Aligned Pre-training for Vision-Language Tasks
-- [X]  Pixel-BERT: Aligning Image Pixels with Text by Deep Multi-Modal Transformers
-- [X]  [ACL2021] UNIMO: Towards Unified-Modal Understanding and Generation via Cross-Modal Contrastive Learning
-- [X]  [ICML2021] Learning Transferable Visual Models From Natural Language Supervision
-- [X]  Data2Vec: A General Framework for Self-supervised Learning in Speech, Vision and Language
-- [X]  [ICML2021] ViLT: Vision-and-Language Transformer Without Convolution or Region Supervision
-- [X]  [CVPR2021] OSCAR+: VinVL: Revisiting Visual Representations in Vision-Language Models
+- [x] [多模态预训练模型综述](https://zhuanlan.zhihu.com/p/435697429)
+- [x] [NeurIPS2019] ViLBERT: Pretraining Task-Agnostic Visiolinguistic Representations for Vision-and-Language Tasks
+- [x] Fusion of Detected Objects in Text for Visual Question Answering
+- [x] [EMNLP2019] LXMERT: Learning Cross-Modality Encoder Representations from Transformers
+- [x] VISUALBERT: A Simple And Performant Baseline For Vision And Language
+- [x] [AAAI2020] Unicoder-VL: A Universal Encoder for Vision and Language by Cross-modal Pre-training
+- [x] [ICLR2020] VL-BERT: Pretraining of Generic Visuallinguistic Representations
+- [x] [ECCV2020] UNITER: UNiversal Image-TExt Representation Learning
+- [x] [ECCV2020] Oscar: Object-Semantics Aligned Pre-training for Vision-Language Tasks
+- [x] Pixel-BERT: Aligning Image Pixels with Text by Deep Multi-Modal Transformers
+- [x] [ACL2021] UNIMO: Towards Unified-Modal Understanding and Generation via Cross-Modal Contrastive Learning
+- [x] [ICML2021] Learning Transferable Visual Models From Natural Language Supervision
+- [x] Data2Vec: A General Framework for Self-supervised Learning in Speech, Vision and Language
+- [x] [ICML2021] ViLT: Vision-and-Language Transformer Without Convolution or Region Supervision
+- [x] [CVPR2021] OSCAR+: VinVL: Revisiting Visual Representations in Vision-Language Models
 
 ### [Multilingual Cross-modal Pretrain](#MCP)
 
-- [X]  [ACL2020] Multimodal Transformer for Multimodal Machine Translation
-- [X]  [ACL2020] Unsupervised Multimodal Neural Machine Translation with Pseudo Visual Pivoting
-- [X]  [CVPR2021] M3P: Learning Universal Representations via Multitask Multilingual Multimodal Pre-training
-- [X]  [CVPR2021] UC2: Universal Cross-lingual Cross-modal Vision-and-Language Pre-training
-- [X]  [ICML2021] ALIGN: Scaling Up Visual and Vision-Language Representation Learning With Noisy Text Supervision
-- [X]  Retrieve Fast, Rerank Smart: Cooperative and Joint Approaches for Improved Cross-Modal Retrieval
-- [X]  [EMNLP2021] MURAL: Multimodal, Multitask Retrieval Across Languages
-- [X]  xGQA: Cross-Lingual Visual Question Answering
-- [X]  Wukong: 100 Million Large-scale Chinese Cross-modal Pre-training Dataset and A Foundation Framework
-- [X]  Delving Deeper into Cross-lingual Visual Question Answering
+- [x] [ACL2020] Multimodal Transformer for Multimodal Machine Translation
+- [x] [ACL2020] Unsupervised Multimodal Neural Machine Translation with Pseudo Visual Pivoting
+- [x] [CVPR2021] M3P: Learning Universal Representations via Multitask Multilingual Multimodal Pre-training
+- [x] [CVPR2021] UC2: Universal Cross-lingual Cross-modal Vision-and-Language Pre-training
+- [x] [ICML2021] ALIGN: Scaling Up Visual and Vision-Language Representation Learning With Noisy Text Supervision
+- [x] Retrieve Fast, Rerank Smart: Cooperative and Joint Approaches for Improved Cross-Modal Retrieval
+- [x] [EMNLP2021] MURAL: Multimodal, Multitask Retrieval Across Languages
+- [x] xGQA: Cross-Lingual Visual Question Answering
+- [x] Wukong: 100 Million Large-scale Chinese Cross-modal Pre-training Dataset and A Foundation Framework
+- [x] Delving Deeper into Cross-lingual Visual Question Answering
 
 ### Visual Prompt
 
@@ -62,7 +62,9 @@
 
 是IBM在2002提出的，用于机器翻译任务的评价指标。
 
-$$bleu_n=\displaystyle\frac{\sum_{c\in candidates}\sum_{n-gram\in c} Count_{clip}(n-gram)}{\sum_{c\in candidates}\sum_{n-gram\in c} Count(n-gram')}$$
+$$
+bleu_n=\displaystyle\frac{\sum_{c\in candidates}\sum_{n-gram\in c} Count_{clip}(n-gram)}{\sum_{c\in candidates}\sum_{n-gram\in c} Count(n-gram')}
+$$
 
 其中$n-gram$代表连续判据的连续单词数，$n=1$时为单词级别的准确性，高阶$n$可以衡量句子的流畅度。
 
@@ -82,7 +84,9 @@ $$bleu_n=\displaystyle\frac{\sum_{c\in candidates}\sum_{n-gram\in c} Count_{clip
 
 2、为每一个$\omega_k$计算TF-IDF权重：
 
-$$g_k(s_{ij})=\displaystyle\frac{h_k(s_{ij})}{\sum_{w_l\in\Omega}h_l(s_{ij})}log(\displaystyle\frac{|I|}{\sum_{I_p\in I}min(1,\sum_qh_k(s_{pq})})$$
+$$
+g_k(s_{ij})=\displaystyle\frac{h_k(s_{ij})}{\sum_{w_l\in\Omega}h_l(s_{ij})}log(\displaystyle\frac{|I|}{\sum_{I_p\in I}min(1,\sum_qh_k(s_{pq})})
+$$
 
 其中$\omega_k$代表某一个$n-gram$，$s_{ij}$代表第$i$个图像的第$j$个语句，其出现次数为$h_k(s_{ij}$，$\Omega$代表全部$n-gram$集合。
 
@@ -90,7 +94,9 @@ $$g_k(s_{ij})=\displaystyle\frac{h_k(s_{ij})}{\sum_{w_l\in\Omega}h_l(s_{ij})}log
 
 3、计算$CIDEr$分数：
 
-$$CIDEr_n(c_i,S_i)=\displaystyle\frac{1}{m}\displaystyle\sum_j\displaystyle\frac{g^n(c_i)g^n(s_{ij})}{||g^n(c_i)||||g^n(s_{ij})||}$$
+$$
+CIDEr_n(c_i,S_i)=\displaystyle\frac{1}{m}\displaystyle\sum_j\displaystyle\frac{g^n(c_i)g^n(s_{ij})}{||g^n(c_i)||||g^n(s_{ij})||}
+$$
 
 其中，$\omega_k$在某个“候选语句”c_i(表示针对第$i$个图像，模型生成的语句)中出现的次数表示为$h_k(c_i)$，$g^n(c_i)$代表长度为n的$n-gram$的权值向量。
 
@@ -104,11 +110,15 @@ $$CIDEr_n(c_i,S_i)=\displaystyle\frac{1}{m}\displaystyle\sum_j\displaystyle\frac
 
 一种基于模型caption与答案word-to-word映射的考虑精确率和召回率的指标：
 
-$$P=\displaystyle\frac{mapped}{total_s},R=\displaystyle\frac{mapped}{total_r}$$
+$$
+P=\displaystyle\frac{mapped}{total_s},R=\displaystyle\frac{mapped}{total_r}
+$$
 
 其中$mapped$代表对应上的词语个数，$total_s$代表模型生成句子的词语总个数，$total_r$代表参考译文中的词语总个数，其最终的结果为二者的调和平均，并使用$Penalty$来调整：
 
-$$F_{means}=\displaystyle\frac{10PR}{R+9P},Score=F_{means}\times(1-Penalty)$$
+$$
+F_{means}=\displaystyle\frac{10PR}{R+9P},Score=F_{means}\times(1-Penalty)
+$$
 
 其中$Penalty$为句子在更宏观尺度上的流畅度度量，对更大的$n-gram$时匹配效果更好的caption，其$Penalty$更小。
 
@@ -120,14 +130,15 @@ $$F_{means}=\displaystyle\frac{10PR}{R+9P},Score=F_{means}\times(1-Penalty)$$
 
 ROUGE-L主要计算的是最长公共子序列的F-measure:
 
-$$R_{lcs}=\displaystyle\frac{LCS(X,Y)}{m},P_{lcs}=\displaystyle\frac{LCS(X,Y)}{n},F_{lcs}=\displaystyle\frac{(1+\beta^2)R_{lcs}P_{lcs}}{R_{lcs}+\beta^2P_{lcs}}$$
+$$
+R_{lcs}=\displaystyle\frac{LCS(X,Y)}{m},P_{lcs}=\displaystyle\frac{LCS(X,Y)}{n},F_{lcs}=\displaystyle\frac{(1+\beta^2)R_{lcs}P_{lcs}}{R_{lcs}+\beta^2P_{lcs}}
+$$
 
 其中$X，Y$表示的是模型生成句子和参考译文。$m,n$分别表示它们的长度。当有多个参考译文时，**挑选最高分数**作为最终的评判分数。
 
 #### 一些数据集
 
 <div class="center">
-
 
 |        Datasets        | Num of Images | Num of Image-caption Pairs | Languages |
 | :-----------------------: | :-------------: | :--------------------------: | :---------: |
@@ -170,7 +181,9 @@ WordPiece算法可以看做是BPE的变种，不同点在于，WordPiece基于�
 
 第4步的具体解释：对于一个由$n$个子词$t_i$组成的句子$S=(t_1,t_2,\dots,t_n)$，假设子词独立，则句子$S$的似然值等于子词似然的乘积：$logP(s)=\displaystyle\sum_{i=1}^nlogP(l_i)$，假设将两个相邻位置$x,y$子词合并为子词$z$，则原句似然值变化量可表示为：
 
-$$\Delta logP(S)=logP(l_z)-(logP(l_x)+logP(l_y))=log\displaystyle\frac{P(l_z)}{P(l_x)P(l_y)}$$
+$$
+\Delta logP(S)=logP(l_z)-(logP(l_x)+logP(l_y))=log\displaystyle\frac{P(l_z)}{P(l_x)P(l_y)}
+$$
 
 可以看出似然值的变化即两子词互信息，则合并的两子词需具有最大的互信息，其在句子中的关联性最强。
 
@@ -219,7 +232,7 @@ $$\Delta logP(S)=logP(l_z)-(logP(l_x)+logP(l_y))=log\displaystyle\frac{P(l_z)}{P
 #### Context-Aware Attention Network for Image-Text Retrieval
 
 * Motivation: 传统的图像-语言注意力模型往往忽略一个词或图像区域在全局中可能有不同的语义，全局上下文是指两种模态（模态间）之间的交互和对齐以及单个模态（模态内）中的语义相关性。本文提出一种上下文感知注意力网络（Context-Aware Attetion Network, CAAN），可以从全局的角度基于给定的上下文来适应的选择信息片段，包括单模态内语义与区域、单词之间的对齐的相关性。本文还提出了语义注意力机制（Semantic Attention, SA）来获得模态内的潜在相关性；
-* Method: 网络的输入为一幅图像与其对应的文本，分别通过Bottom-up Attention(Fast-RCNN+ResNet)与Bi-GRU进行编码与映射，得到对应矩阵$V\in\mathcal R^{\mathcal D\times m}$与$U\in\mathcal R^{\mathcal D\times n}$，CAAN的主体部分为一个上下文感知注意力模块，其具体过程可分为以下几步：i.获得融合矩阵$H=tanh(V^TKU)$；ii.计算模态间注意力：$H_{ij}^{uv}=\displaystyle\frac{H_{ij}_{+}}{\sqrt{\sum_{k=1}^nH_{kj}^2_+}},H_{ij}^{vu}=\displaystyle\frac{H_{ij}\_{+}}{\sqrt{\sum_{k=1}^mH_{ik}^2_+}}$；iii.计算模态内注意力：$H^v=V^TM_1V,H^u=U^TM_2U$；iv.计算归一化的注意力：$f(V,U)=softmax(W^vtanh(H^vV^TQ_1+H^{uv}U^TQ_2))$；v.最终的跨模态注意力（以图像为例）：$\hat v=Vf(V,U)$；vi.模型的损失：$L(\hat v,\hat u)=\displaystyle\sum_{\hat v^-,\hat u^-}\{max\{0,m-S(\hat v,\hat u)+S(\hat v,\hat u^-)}+max\{0,m-S(\hat v,\hat u)+S(\hat v^-,\hat u)\}\}$，其中$S$为匹配函数，定义为矩阵内积
+* Method: 网络的输入为一幅图像与其对应的文本，分别通过Bottom-up Attention(Fast-RCNN+ResNet)与Bi-GRU进行编码与映射，得到对应矩阵$V\in\mathcal R^{\mathcal D\times m}$与$U\in\mathcal R^{\mathcal D\times n}$，CAAN的主体部分为一个上下文感知注意力模块，其具体过程可分为以下几步：i.获得融合矩阵$H=tanh(V^TKU)$；ii.计算模态间注意力：$H_{ij}^{uv}=\displaystyle\frac{{H_{ij}}_{+}}{\sqrt{\sum_{k=1}^n{H_{kj}^2}_+}},H_{ij}^{vu}=\displaystyle\frac{{H_{ij}}_{+}}{\sqrt{\sum_{k=1}^m{H_{ik}^2}_+}}$；iii.计算模态内注意力：$H^v=V^TM_1V,H^u=U^TM_2U$；iv.计算归一化的注意力：$f(V,U)=softmax(W^vtanh(H^vV^TQ_1+H^{uv}U^TQ_2))$；v.最终的跨模态注意力（以图像为例）：$\hat v=Vf(V,U)$；vi.模型的损失：$L(\hat v,\hat u)=\displaystyle\sum_{\hat v^-,\hat u^-}\{max\{0,m-S(\hat v,\hat u)+S(\hat v,\hat u^-)+max\{0,m-S(\hat v,\hat u)+S(\hat v^-,\hat u)\}\}$，其中$S$为匹配函数，定义为矩阵内积
 
 <span id="VLP">
 
@@ -328,7 +341,9 @@ Vision Language Pretrain 一般包含三个关键技术：特征提取、特征�
 
 本文提出的OSCAR模型在传统VLP的Linguistic、Visual输入的基础上，推出了Object Tag Input的三模态输入$(w,q,v)$，文中还提出了两种视角下的训练任务，包括Dictionary View与Modality View（想不到好翻译）：
 
-$$x\overset{\underset{\Delta}{}}{=}[w,(q,v)]=[(w,q),v]\overset{\underset{\Delta}{}}{=}x’$$
+$$
+x\overset{\underset{\Delta}{}}{=}[w,(q,v)]=[(w,q),v]\overset{\underset{\Delta}{}}{=}x’
+$$
 
 其中w为使用Pretrained BERT编码的Caption特征，q为ROI Tag特征，v为图像特征，q与v生成的是通过调用Pretrained Faster R-CNN来进行的，对于q使用与w相同的BERT进行编码，对于有相似语义的词其在空间中的特征向量也必然是相近的，会因此得到更高的注意力权重，对于v，本文使用了将Position Embedding concatenate在Visual Embedding后面的方法，这个还是挺有意思的（虽然我感觉会导致一个4-6维特征淹没在Visual Embedding的2048维特征中），之后使用一个FC来调整维度；
 
@@ -413,7 +428,9 @@ xGQA里提到了cue到了OSCAR+，所以掉头回来复习一下，结果OSCAR+�
 
 很短的一篇文章，其思路就是通过引入其他模态信息的方式，实现对机器翻译能力的提升；文中指出在Transformer 中，每一个词的表示都是在自注意力过程中由所有词共同产生。因此，如果我们把每一个词看成一个结点，那么 Transformer 就可以看成是图神经网络的一个变体，每一句话都是一个全相连的图。虽然通过引入视觉信息来辅助文本翻译任务，文本和视觉信息在模型中并不是等价的，文本相对视觉特征来说更为重要，所以在模型的结构上，Transformer的Query生成依靠Vision +Language，而Key与Value则仅仅使用Linguistic Information，输出如下：
 
-$$c_i=\displaystyle\sum_{j=1}^n\alpha_{ij}(x_j^{text}W^V), \alpha_{ij}=softmax(\displaystyle\frac{(x_iW^Q)(x_j^{text}W^K)^T}{\sqrt{d}})$$
+$$
+c_i=\displaystyle\sum_{j=1}^n\alpha_{ij}(x_j^{text}W^V), \alpha_{ij}=softmax(\displaystyle\frac{(x_iW^Q)(x_j^{text}W^K)^T}{\sqrt{d}})
+$$
 
 本文的文本Encoder选择300维的Glove，图像Encoder使用ResNet50的最后一层空间特征作为输入，并在Transformer上选择6层300维输入的Encoder与Decoder来实现图像引导的文本翻译。
 
@@ -541,3 +558,5 @@ Google的文章，充斥着暴力美学。文章指出现有工作都是基于�
 </div>
 
 对于fine-tune方法，本文提出了两种：1、Freezing Text Embeddings(FT)与2、Self-Bootstrapping(SB)；前者冻住Text Embedding Layers，仅对Transformer与Classification Head进行优化；而后者作者指出zero-shot fine-tune对于权重初始化非常敏感，而如果Classifier Head已经优化的前提下，对于权重则没那么敏感，该方法在FT的基础上对Transformer的权重进行的reset并对$f_{trans}$的权重进行了初始化，冻结Embedding和Head的权重进行fine-tune；可以看到模型在VQA上的表现在加入了QType+SB的情况下表现提升十分明显。
+
+
