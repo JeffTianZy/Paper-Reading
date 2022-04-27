@@ -594,7 +594,7 @@ t_k^d=[v]_1[v]_2\dots[v]_{M_1}[d]_1[d]_2\dots[d]_{M_2}[CLASS]_k
 $$
 
 其中$[v]$代表Domain-agnostic Tokens，$[d]$代表Domain Tokens，$[CLASS]$代表Label
-Tokens。使用的数据是一些Labeled Source Images与一些Unlabeled Target Images，对于Labeled Source Images使用与
+Tokens。使用的数据是一些Labeled Source Images与一些Unlabeled Target Images，对于Labeled Source Images使用与CLIP相同的Loss：$\mathcal{L}_s=-\displaystyle\frac{1}{N_s}\sum_{i=1}^{N_s}logP(\hat{y}_i^s=y_i^s)$，而对于Unlabeled Target Images，本文利用了CLIP的zero-shot能力，以$\tau$为阈值对最大的Zero-shot结果作为其pseudolabel，来定义Loss：$\mathcal{L}_u=-\displaystyle\frac{1}{N_u}\sum_{i=1}^{N_u}\mathbb{1}(P(\hat{y}_i^u=y_i^u|x_i^u)\geq\tau)logP(\hat{y}_i^u=y_i^u|x_i^u)$
 
 #### [Arxiv2022] Visual Prompting: Modifying Pixel Space to Adapt Pre-trained Models
 
