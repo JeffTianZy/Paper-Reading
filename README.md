@@ -587,7 +587,14 @@ Google的文章，充斥着暴力美学。文章指出现有工作都是基于�
 
 传统的Fine-tuning工作往往在Domain间直接迁移，而unsupervised domain adaption则试图将不同domain的空间进行拉齐，学习到一些域无关的特征来进行微调，而这一过程往往会产生统计学差异最小化或学习对抗；本文提出一种新的方法Domain Adaption via Prompt Learning (DAPL)来克服上述问题，实现基于文本的跨域对齐。
 
-本文选择[CLIP](#CLIP)作为研究基础，在CLIP的基础上进行的Prompt Learning是在原先的引导Template基础上，使用Learnable Template取代固定Template，而这一方法往往是Domain-agnostic（领域不定？）的，本文在此基础上提出的DAPL则在Learnable Template中添加了一些Domain Tokens，这些Domain Tokens在不同类别之间是相通的，但是在不同域（Source与Target）之间是不共享的，使用的数据是一些Labeled Source Images与一些Unlabeled Target Images。
+本文选择[CLIP](#CLIP)作为研究基础，在CLIP的基础上进行的Prompt Learning是在原先的引导Template基础上，使用Learnable Template取代固定Template，而这一方法往往是Domain-agnostic（领域不定？）的，本文在此基础上提出的DAPL则在Learnable Template中添加了一些Domain Tokens，这些Domain Tokens在不同类别之间是相通的，但是在不同域（Source与Target）之间是不共享的，其输入如下：
+
+$$
+t_k^d=[v]_1[v]_2\dots[v]_{M_1}[d]_1[d]_2\dots[d]_{M_2}[CLASS]_k
+$$
+
+其中$[v]$代表Domain-agnostic Tokens，$[d]$代表Domain Tokens，$[CLASS]$代表Label
+Tokens。使用的数据是一些Labeled Source Images与一些Unlabeled Target Images，对于Labeled Source Images使用与
 
 #### [Arxiv2022] Visual Prompting: Modifying Pixel Space to Adapt Pre-trained Models
 
