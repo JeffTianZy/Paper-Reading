@@ -15,15 +15,11 @@
 - [x] Context-Aware Group Captioning via Self-Attention and Contrastive Features
 - [x] More Grounded Image Captioning by Distilling Image-Text Matching Model
 
-### [Image/Video-Text](#IVT)
-
-- [x] ActBERT: Learning Global-Local Video-Text Representations
-- [x] Context-Aware Attention Network for Image-Text Retrieval
-
-### [Vision Language Pretrain](#VLP)
+### [Image Language Pretrain](#VLP)
 
 - [x] [多模态预训练模型综述](https://zhuanlan.zhihu.com/p/435697429)
 - [x] [NeurIPS2019] ViLBERT: Pretraining Task-Agnostic Visiolinguistic Representations for Vision-and-Language Tasks
+- [x] Context-Aware Attention Network for Image-Text Retrieval
 - [x] Fusion of Detected Objects in Text for Visual Question Answering
 - [x] [EMNLP2019] LXMERT: Learning Cross-Modality Encoder Representations from Transformers
 - [x] VISUALBERT: A Simple And Performant Baseline For Vision And Language
@@ -38,6 +34,15 @@
 - [x] [ICML2021] ViLT: Vision-and-Language Transformer Without Convolution or Region Supervision
 - [x] [CVPR2021] OSCAR+: VinVL: Revisiting Visual Representations in Vision-Language Models
 
+### [Video Language Pretrain](#VidLP)
+
+- [x] [CVPR2020] ActBERT: Learning Global-Local Video-Text Representations
+- [x] [CVPR2021] Less is more: Clipbert for video-and-language learning via sparse sampling
+- [x] [CVPR2021] Frozen in time: A joint video and image encoderfor end-to-end retrieval
+- [x] [EMNLP2021] Videoclip: Contrastive pre-training for zero-shot video-text understanding
+- [x] [CVPR2022] Object-aware Video-language Pre-training for Retrieval
+- [x] [CVPR2022] Bridging Video-text Retrieval with Multiple Choice Questions
+
 ### [Multilingual Cross-modal Pretrain](#MCP)
 
 - [x] [ACL2020] Multimodal Transformer for Multimodal Machine Translation
@@ -50,12 +55,17 @@
 - [x] xGQA: Cross-Lingual Visual Question Answering
 - [x] Wukong: 100 Million Large-scale Chinese Cross-modal Pre-training Dataset and A Foundation Framework
 - [x] Delving Deeper into Cross-lingual Visual Question Answering
+- [x] Cross-View Language Modeling: Towards Unified Cross-Lingual Cross-Modal Pre-training
 
 ### [Visual Prompt](#PROMPT)
 
 - [x] [Arxiv2022] Visual Prompt Tuning
 - [x] [Arxiv2022] Domain Adaptation via Prompt Learning
 - [x] [Arxiv2022] Visual Prompting: Modifying Pixel Space to Adapt Pre-trained Models
+
+### [Others](#OTHER)
+
+- [x] [Arxiv2022] MVP: Multimodality-guided Visual Pre-training
 
 ## 笔记
 
@@ -223,24 +233,6 @@ $$
 * Method(structure): 模型分为两个部分：图像理解器和图像-文本匹配器：1、在图像-文本匹配器部分，图像的输入为使用提取器提取到的特征集合，并进行维度变换以适应文本特征，记作$v_i$；文本的输入只选择名词，使用一个双向GRU的均值来进行编码，记作$e_t$。在此之后计算其余弦相似度$s_{it}=\displaystyle\frac{v_i^Te_t}{||v_i||||e_t||}$并进行归一化，使用针对第$t$个单词的特征$a_t^v$对文本特征的余弦相似度求均值的方法得到图像文本匹配的全局相似度；2、在图像理解器方面，则使用注意力LSTM与语言LSTM结合的方式，对t时刻语言LSTM的输出、图像特征均值和该时刻编码词特征作为注意力LSTM的输入，获得一个隐态特征，并使用该特征来获得可能的输出文字的条件分布。
 * Method(training): POS-SCAN在图像理解数据集上进行与训练并锁定权重，用作注意力的引导与细粒度反馈器。模型使用一种带有图像理解器注意力权重$\beta_t$与POS-SCAN注意力权重$\alpha_t$的散度约束正则化损失函数$l_1(\theta)=\displaystyle\sum_{t=1}^n\{-log(p_{\theta}(y_t^*|y_{1:t-1}^*))+\lambda_1\mathbb{I}_{y_t^*=y^{noun}}KL(\beta_t||\alpha_t)\}$来进行图像理解器的训练，使模型可以更好的关注图像的特定区域。之后使用反馈函数为$r(y_{1:n})=CIDEr(y_{1:n})+\lambda_2S(I,y_{1:n})$的强化学习训练方法来对图像理解器进行进一步训练，以获得最终的结果。
 
-<span id="IVT">
-
-## Image/Video-Text
-
-</span>
-
-#### ActBERT: Learning Global-Local Video-Text Representations
-
-* Motivation: BERT在自然语言处理的预训练任务中有着十分优秀的表现，本文基于BERT推广到视频-语言联合任务中，在之前的研究中使用的方法是将视频特征离散化为token，并送入BERT模型，然而这一离散化过程会损失掉无数局部信息，比如交互、动作等。本文提出了ActBERT，该结构可以结合全局的动作、局部的目标与文字描述；本文还提出Tangled Transformer Block（TNT）来对三种特征进行编码，通过交错的编码结构提高了多模态特征之间的相互作用，以此提高模型表现；
-* Model(structure): ActBERT的输入有四类，包括动作、图像区域、文字描述与特殊token，其中特殊token用于区分不同的输入；包含了四种嵌入：位置嵌入、分割嵌入、token嵌入与视觉嵌入，其中位置嵌入提供了对不同动作的时序信息，而物品则采用相同的嵌入；分割嵌入提供了与不同视频切片的对应关系；token嵌入表征了输入信息的模态；视觉输入包括动作与物体，动作使用3D CNN，物体使用FastRCNN来确定物体的坐标信息输入。
-* Model(detail): ActBERT还提出了一种TNT的transformer结构，这种结构将视觉信息和语言信息有效的结合，通过两个多头注意力模块来进行融合（互相提供Key与Value），并利用一个全局线索来从语言和视觉特征中进行引导（Query），通过跨模态的特征融合，TNT可以动态地选择有效特征进行目标预测；
-* Method(Training): ActBERT的预训练包括四个任务：全局与局部线索的掩码语言建模、掩码动作分类、掩码目标分类与跨模态匹配，其中全局与局部线索的掩码语言建模与BERT类似，对于语言的输入进行随机Mask，要求模型利用视觉信息来提供缺失的信息；掩码的动作、目标分类使用掩码的动作特征与目标特征，模型分别来通过信息预测动作分类与空间分布；跨模态匹配使用线性输出层，通过语句和视觉特征的相关性来表征匹配相关性。
-
-#### Context-Aware Attention Network for Image-Text Retrieval
-
-* Motivation: 传统的图像-语言注意力模型往往忽略一个词或图像区域在全局中可能有不同的语义，全局上下文是指两种模态（模态间）之间的交互和对齐以及单个模态（模态内）中的语义相关性。本文提出一种上下文感知注意力网络（Context-Aware Attetion Network, CAAN），可以从全局的角度基于给定的上下文来适应的选择信息片段，包括单模态内语义与区域、单词之间的对齐的相关性。本文还提出了语义注意力机制（Semantic Attention, SA）来获得模态内的潜在相关性；
-* Method: 网络的输入为一幅图像与其对应的文本，分别通过Bottom-up Attention(Fast-RCNN+ResNet)与Bi-GRU进行编码与映射，得到对应矩阵$V\in\mathcal R^{\mathcal D\times m}$与$U\in\mathcal R^{\mathcal D\times n}$，CAAN的主体部分为一个上下文感知注意力模块，其具体过程可分为以下几步：i.获得融合矩阵$H=tanh(V^TKU)$；ii.计算模态间注意力：$H_{ij}^{uv}=\displaystyle\frac{{H_{ij}}_{+}}{\sqrt{\sum_{k=1}^n{H_{kj}^2}_+}},H_{ij}^{vu}=\displaystyle\frac{{H_{ij}}_{+}}{\sqrt{\sum_{k=1}^m{H_{ik}^2}_+}}$；iii.计算模态内注意力：$H^v=V^TM_1V,H^u=U^TM_2U$；iv.计算归一化的注意力：$f(V,U)=softmax(W^vtanh(H^vV^TQ_1+H^{uv}U^TQ_2))$；v.最终的跨模态注意力（以图像为例）：$\hat v=Vf(V,U)$；vi.模型的损失：$L(\hat v,\hat u)=\displaystyle\sum_{\hat v^-,\hat u^-}\{max\{0,m-S(\hat v,\hat u)+S(\hat v,\hat u^-)+max\{0,m-S(\hat v,\hat u)+S(\hat v^-,\hat u)\}\}$，其中$S$为匹配函数，定义为矩阵内积
-
 <span id="VLP">
 
 ## Vision Language Pretrain
@@ -276,6 +268,11 @@ Vision Language Pretrain 一般包含三个关键技术：特征提取、特征�
 * 特征融合：本文提出一种Co-attentional Transformer结构，是一种典型的双流构型，这一构型首先在文本Token上通过$L-K$个Transformer，再对图像和文本的Token进行融合，使用对方来生成自己的Key与Value，后格接一个Transformer，该构型作为一组，共使用$K$组Co-TRM结构来得到最后的输出$h_{v0},\dots,h_{vT},h_{w0},\dots,h_{wT}$
 * 预训练任务：本文介绍了包括屏蔽与匹配两种预训练任务，在屏蔽任务中，对图像与文本数据按上文介绍的过程进行屏蔽，使用最小化KL散度的方式来对模型进行优化；在匹配任务中，则是使用两种模态的头Token：\<IMG\>与\<CLS\>的输出进行点乘，使用一个线性分类器确定其是否匹配。
 * Addition: 本文还介绍了使用ViLBERT的一些下游任务，包括VQA、VCR、GRE(Grounding Referring Expressions)与CIR(Caption-based Image Retrieval)，其中比较有趣的是Zero-shot CIR任务，该模型在没有经过任何迁移训练的情况下进行图片检索，达到了31.86的Top1 Acc，证明了该模型特征提取的有效性。
+
+#### Context-Aware Attention Network for Image-Text Retrieval
+
+* Motivation: 传统的图像-语言注意力模型往往忽略一个词或图像区域在全局中可能有不同的语义，全局上下文是指两种模态（模态间）之间的交互和对齐以及单个模态（模态内）中的语义相关性。本文提出一种上下文感知注意力网络（Context-Aware Attetion Network, CAAN），可以从全局的角度基于给定的上下文来适应的选择信息片段，包括单模态内语义与区域、单词之间的对齐的相关性。本文还提出了语义注意力机制（Semantic Attention, SA）来获得模态内的潜在相关性；
+* Method: 网络的输入为一幅图像与其对应的文本，分别通过Bottom-up Attention(Fast-RCNN+ResNet)与Bi-GRU进行编码与映射，得到对应矩阵$V\in\mathcal R^{\mathcal D\times m}$与$U\in\mathcal R^{\mathcal D\times n}$，CAAN的主体部分为一个上下文感知注意力模块，其具体过程可分为以下几步：i.获得融合矩阵$H=tanh(V^TKU)$；ii.计算模态间注意力：$H_{ij}^{uv}=\displaystyle\frac{{H_{ij}}_{+}}{\sqrt{\sum_{k=1}^n{H_{kj}^2}_+}},H_{ij}^{vu}=\displaystyle\frac{{H_{ij}}_{+}}{\sqrt{\sum_{k=1}^m{H_{ik}^2}_+}}$；iii.计算模态内注意力：$H^v=V^TM_1V,H^u=U^TM_2U$；iv.计算归一化的注意力：$f(V,U)=softmax(W^vtanh(H^vV^TQ_1+H^{uv}U^TQ_2))$；v.最终的跨模态注意力（以图像为例）：$\hat v=Vf(V,U)$；vi.模型的损失：$L(\hat v,\hat u)=\displaystyle\sum_{\hat v^-,\hat u^-}\{max\{0,m-S(\hat v,\hat u)+S(\hat v,\hat u^-)+max\{0,m-S(\hat v,\hat u)+S(\hat v^-,\hat u)\}\}$，其中$S$为匹配函数，定义为矩阵内积
 
 #### Fusion of Detected Objects in Text for Visual Question Answering
 
@@ -378,8 +375,8 @@ SimCLR（正负样本相似度，归一化夹角最近最远）→BYOL（只有�
 
 #### [ICML2021] CLIP: Learning Transferable Visual Models From Natural Language Supervision
 
-</span>  
-  
+</span>
+
 依旧是对比学习的工作，非常novel的idea，文本与图像的编码均使用Transformer结构，特别说明的是图像使用的是ViT进行编码。该工作的数据来源除了常用的公开数据集MSCOCO等之外，还从网络上爬取的大量图像-文本对，进行数据清洗之后来加入到训练之中；该模型的预训练任务为一对比学习，对于相关的图像-文本对计算其Transformer输出的相似度尽可能大，而非相关的文本-图像对尽可能小，这样就形成了一个相似度矩阵中对角线元素较大（对角占优）其余元素较小的矩阵，可以近似为一个one-hot分类，使用CELoss；在此基础上通过对文本库使用预训练的Text Transformer进行编码，找寻zero-shot图像的ViT输出相似度最大值，就可以实现对图片描述内容的zero-shot prediction。
 
 <div style="text-align: center;">
@@ -429,6 +426,46 @@ xGQA里提到了cue到了OSCAR+，所以掉头回来复习一下，结果OSCAR+�
 基于OSCAR得到的结果，图像ROI的label对于模型的多模态学习有很大的帮助，本文延续了这一思路，并提出了一种全新的Object Detection Model，由于缺乏非常有效的针对性数据集，本文提出了一种新的训练思路；在数据集上文中整合了MSCOCO、OpenImagesV5、Objects365V1与VisualGenome四个数据集；在网络结构上，虽然之前的研究曾经证明FPN的结构相对C4有更强的特征表征能力，然而本文经过精心设计的实验证明C4具有更好的性能，其原因主要是由于C4的预训练权重在缺乏足量数据的情况下相对FPN的未经预训练的FC有更大优势，且卷积结构的表征能力也要好于FC；选择ResNeXt152 C4预训练模型，并添加了一个attribute branch用来生成ROI额外的attribute；
 在预训练任务上，选取MLM与VLM+VQA两种任务，在MLM上选择经典的方法，在VLM上使用与OSCAR相似的制造负样本的方式，但是在Loss上则与OSCAR不同，增加了对于VQA的额外负样本。
 
+<span id="VidLP">
+
+## Video Language Pretraining
+
+</span>
+
+#### [CVPR2020] ActBERT: Learning Global-Local Video-Text Representations
+
+* Motivation: BERT在自然语言处理的预训练任务中有着十分优秀的表现，本文基于BERT推广到视频-语言联合任务中，在之前的研究中使用的方法是将视频特征离散化为token，并送入BERT模型，然而这一离散化过程会损失掉无数局部信息，比如交互、动作等。本文提出了ActBERT，该结构可以结合全局的动作、局部的目标与文字描述；本文还提出Tangled Transform er Block（TNT）来对三种特征进行编码，通过交错的编码结构提高了多模态特征之间的相互作用，以此提高模型表现；
+* Model(structure): ActBERT的输入有四类，包括动作、图像区域、文字描述与特殊token，其中特殊token用于区分不同的输入；包含了四种嵌入：位置嵌入、分割嵌入、token嵌入与视觉嵌入，其中位置嵌入提供了对不同动作的时序信息，而物品则采用相同的嵌入；分割嵌入提供了与不同视频切片的对应关系；token嵌入表征了输入信息的模态；视觉输入包括动作与物体，动作使用3D CNN，物体使用FastRCNN来确定物体的坐标信息输入。
+* Model(detail): ActBERT还提出了一种TNT的transformer结构，这种结构将视觉信息和语言信息有效的结合，通过两个多头注意力模块来进行融合（互相提供Key与Value），并利用一个全局线索来从语言和视觉特征中进行引导（Query），通过跨模态的特征融合，TNT可以动态地选择有效特征进行目标预测；
+* Method(Training): ActBERT的预训练包括四个任务：全局与局部线索的掩码语言建模、掩码动作分类、掩码目标分类与跨模态匹配，其中全局与局部线索的掩码语言建模与BERT类似，对于语言的输入进行随机Mask，要求模型利用视觉信息来提供缺失的信息；掩码的动作、目标分类使用掩码的动作特征与目标特征，模型分别来通过信息预测动作分类与空间分布；跨模态匹配使用线性输出层，通过语句和视觉特征的相关性来表征匹配相关性。
+
+#### [CVPR2021] Less is more: Clipbert for video-and-language learning via sparse sampling
+
+CLIPBERT指出目前训练多模态模型所使用的动作识别、目标检测网络都是单模态的，这样提取到的特征往往不能很好的适应多模态训练任务，且之前的研究使用全部视频序列作为输入信息冗余太大且占据了大量无效的计算资源。CLIPBERT 就是一种使用稀疏采样的视频-语言预训练模型，通过对视频稀疏采样到少量的片段并使用全局平均池化对视频片段进行压缩，可以把视频的时序信息压缩到尽可能少的图片组中，以此通过 less-is-more 原则利用二维卷积神经网络进行特征提取，这 样一种方法可以有效地节约计算资源，提升训练效率，并且可以支持端到端训练而非锁定特征提取器的方法，使提取器可以适应多模态任务。
+
+#### [CVPR2021] Frozen in time: A joint video and image encoderfor end-to-end retrieval
+
+Frozen是使用与 ViT 类似的思路来进行对视频数据的处理，引入了时空Transformer 结构来作为视觉数据端的输入，并且在时空 Transformer 结构之间有空间注意力与时间注意力的残差链接，通过这种方式使模型对输入数据的时间与空间感知能力更强；在文本部分则采用 BERT 作为文本编码器。在训练方式上则采用了与 CLIP 一致的对比学习方法，本文一大创新点在于利用 Transformer 不定长输入的特点，可以统一视频-语言与图像-语言任务，文中主要是利用这一点使用图文预训练数据集来对Frozen in Time网络进行训练。
+
+#### [EMNLP2021] Videoclip: Contrastive pre-training for zero-shot video-text understanding
+
+#### [CVPR2022] Object-aware Video-language Pre-training for Retrieval
+
+#### [CVPR2022] Bridging Video-text Retrieval with Multiple Choice Questions
+
+传统的视频-文本预训练任务往往使用双流结构来进行高效检索，但却无法让多模态信息充分交互，另一种途径使用联合的编码器，又会严重牺牲效率，本文提出了一种可以保持高效的细粒度的多模态交互模型，通过BridgeFormer学习视频回答多选问题（Multiple Choice Questions）的方式来构建二者的联系，在下游检索应用中，BridgeFormer可以被去除，保证了检索效率。
+
+<div style="text-align: center;">
+
+<img src="./images/bridge.png" width="600" height="XXX" />
+
+</div>
+
+对于MCQ任务，本文的设计是在Caption中找到动词与名词，并通过遮蔽来构造动词问题与名词问题，通过两种模态的编码器TextFormer与VideoFormer可以获得每层的$\{z\}_{verb\_q}$/$\{z\}_{noun\_q}$与$\{z\}_v$以前者作为Query，后者作为Key/Value，通过一个BridgeFormer即可实现特征融合，在BF的输出端通过对比学习的方式找到正确的答案，通过名词问题可以帮助模型捕捉空间信息，通过动词问题可以帮助模型捕捉动态信息。
+模型一共三种损失：跨模态、动词与名词NCE Loss，分别代表了两种模态通过TF/VF的特征之间，BF关于问题输入的特征与答案特征之间的余弦相似度对比损失。
+
+对于网络的预训练，本文对VF使用ViT在ImageNet-21k上的权重初始化，TF则使用DistilBERT在WikiTBC的预训练权重，采取了与Frozen in Time一样的方法利用Transformer的灵活输入特点在CC3M（单帧图片集)与WebVid-2M（多帧视频集）上对VF、TF与BF三者的组合体进行预训练。在对词汇编码的过程中本文使用一种独特的方法：由于TF是对文本段落进行编码的，当对一个单词编码时往往会失效，所以本文选择了Prompt方法为词汇添加了一些[MASK]来形成伪句，效果有略微提升。
+
 <span id="MCP">
 
 ## Multilingual Cross-modal Pretrain
@@ -437,7 +474,7 @@ xGQA里提到了cue到了OSCAR+，所以掉头回来复习一下，结果OSCAR+�
 
 #### [ACL2020] Multimodal Transformer for Multimodal Machine Translation
 
-很短的一篇文章，其思路就是通过引入其他模态信息的方式，实现对机器翻译能力的提升；文中指出在Transformer 中，每一个词的表示都是在自注意力过程中由所有词共同产生。因此，如果我们把每一个词看成一个结点，那么 Transformer 就可以看成是图神经网络的一个变体，每一句话都是一个全相连的图。虽然通过引入视觉信息来辅助文本翻译任务，文本和视觉信息在模型中并不是等价的，文本相对视觉特征来说更为重要，所以在模型的结构上，Transformer的Query生成依靠Vision +Language，而Key与Value则仅仅使用Linguistic Information，输出如下：
+很短的一篇文章，其思路就是通过引入其他模态信息的方式，实现对机器翻译能力的提升；文中指出在Transformer 中，每一个词的表示都是在自注意力过程中由所有词共同产生。因此，如果我们把每一个词看成一个结点，那么 Transformer 就可以看成是图神经网络的一个变体，每一句话都是一个全相连的图。虽然通过引入视觉信息来辅助文本翻译任务，文本和视觉信息在模型中并不是等价的，文本相对视觉特征来说更为重要，所以在模型的结构上，Transformer的Query生成依靠Vision+Language，而Key与Value则仅仅使用Linguistic Information，输出如下：
 
 $$
 c_i=\displaystyle\sum_{j=1}^n\alpha_{ij}(x_j^{text}W^V), \alpha_{ij}=softmax(\displaystyle\frac{(x_iW^Q)(x_j^{text}W^K)^T}{\sqrt{d}})
@@ -570,6 +607,28 @@ Google的文章，充斥着暴力美学。文章指出现有工作都是基于�
 
 对于fine-tune方法，本文提出了两种：1、Freezing Text Embeddings(FT)与2、Self-Bootstrapping(SB)；前者冻住Text Embedding Layers，仅对Transformer与Classification Head进行优化；而后者作者指出zero-shot fine-tune对于权重初始化非常敏感，而如果Classifier Head已经优化的前提下，对于权重则没那么敏感，该方法在FT的基础上对Transformer的权重进行的reset并对$f_{trans}$的权重进行了初始化，冻结Embedding和Head的权重进行fine-tune；可以看到模型在VQA上的表现在加入了QType+SB的情况下表现提升十分明显。
 
+#### [Arxiv2022] Cross-View Language Modeling: Towards Unified Cross-Lingual Cross-Modal Pre-training
+
+文章使用图像与两种语言的Caption作为输入，将图像、英文与中文看作模型的三种不同视角（View）来进行输入并训练，包括跨模态的视觉-文本双视角输入与跨语言的中英文双视角输入，网络模型结构上为一个叠加的多层的自注意力、双视角互注意力与前向FFN组合而成。网络的Encoder上，在文本与图像上都选择了Transformer结构的网络来为输入数据编码。
+
+<div style="text-align: center;">
+
+<img src="./images/cclm.png" width="800" height="XXX" />
+
+</div>
+
+在模型的特征融合阶段，图文输入中以文本输入的Token做自监督，输出作为Query来与图像输入的Token作为Key与Value进行互监督，之后送入FFN进行一次前传，如此迭代N次，双语输入则是类似的使用中文作自监督并于英文模板做互监督。
+
+在训练目标设计上，本文提出了三种损失：
+
+1、基于图文编码的对比损失：是传统的共轭对比损失，即A中样本a与全部B做one-positive，B中样本b与全部A做one-positive；
+
+2、输入匹配损失：对分类头[CLS]通过MLP之后对输入对是否匹配进行分类的损失，对于负样本只采样一例而非全部；
+
+3、条件语言掩码重建：由于除了对比损失中使用的是完整的英文/中文输入，对于特征融合部分使用的是掩码过的文本，所以这里还有一个对掩码文本的重建损失。
+
+模型表现还是非常好的，可以相比其他多语多模态模型如UNITER、M3P、UC2有更快的收敛速度和模型表现.
+
 <span id="PROMPT">
 
 ## Visual Prompt
@@ -605,5 +664,20 @@ Tokens。使用的数据是一些Labeled Source Images与一些Unlabeled Target 
 
 而对于Unlabeled Target Images，本文利用了CLIP的zero-shot能力，以$\tau$为阈值对最大的Zero-shot结果作为其pseudolabel，来定义Loss：$\mathcal{L}_u=-\displaystyle\frac{1}{N_u}\sum_{i=1}^{N_u}\mathbb{1}(P(\hat{y}_i^u=y_i^u|x_i^u)\geq\tau)logP(\hat{y}_i^u=y_i^u|x_i^u)$
 
+<span id="OTHER">
 
+## Others
 
+</span>
+
+#### [Arxiv2022] MVP: Multimodality-guided Visual Pre-training
+
+一篇比较简单有效的工作，把MAE和CLIP结合到一起了，实现多模态引导的图像掩码重建预训练。其实思路就是基于BEIT的一个改进版，BEIT是使用一个Vision Tokenizer来引导MAE Encoder重建Token-level Information，只不过这里是把BEIT的Vision Tokenier换成了一个CLIP的tokenizer，这个网络整体结构有点知识蒸馏的意思。
+
+<div style="text-align: center;">
+
+<img src="./images/mvp.png" width="800" height="XXX" />
+
+</div>
+
+模型表现还不错，相比一些传统的MIM任务模型比如BEIT或者MAE，其可以在相同backbone、更短的预训练周期下达到最好的结果。
