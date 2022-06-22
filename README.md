@@ -66,6 +66,8 @@
 ### [Others](#OTHER)
 
 - [x] [Arxiv2022] MVP: Multimodality-guided Visual Pre-training
+- [ ] [Arxiv2022] Deformable Transformers for End-to-end Object Detection
+- [ ] [ICLR2021] Vision Transformer with Deformable Attention
 
 ## 笔记
 
@@ -446,10 +448,6 @@ CLIPBERT指出目前训练多模态模型所使用的动作识别、目标检测
 #### [CVPR2021] Frozen in time: A joint video and image encoderfor end-to-end retrieval
 
 Frozen是使用与 ViT 类似的思路来进行对视频数据的处理，引入了时空Transformer 结构来作为视觉数据端的输入，并且在时空 Transformer 结构之间有空间注意力与时间注意力的残差链接，通过这种方式使模型对输入数据的时间与空间感知能力更强；在文本部分则采用 BERT 作为文本编码器。在训练方式上则采用了与 CLIP 一致的对比学习方法，本文一大创新点在于利用 Transformer 不定长输入的特点，可以统一视频-语言与图像-语言任务，文中主要是利用这一点使用图文预训练数据集来对Frozen in Time网络进行训练。
-
-#### [EMNLP2021] Videoclip: Contrastive pre-training for zero-shot video-text understanding
-
-#### [CVPR2022] Object-aware Video-language Pre-training for Retrieval
 
 #### [CVPR2022] Bridging Video-text Retrieval with Multiple Choice Questions
 
