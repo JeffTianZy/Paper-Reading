@@ -437,14 +437,14 @@ xGQA里提到了cue到了OSCAR+，所以掉头回来复习一下，结果OSCAR+�
 
 #### [CVPR2020] ActBERT: Learning Global-Local Video-Text Representations
 
-* Motivation: BERT在自然语言处理的预训练任务中有着十分优秀的表现，本文基于BERT推广到视频-语言联合任务中，在之前的研究中使用的方法是将视频特征离散化为token，并送入BERT模型，然而这一离散化过程会损失掉无数局部信息，比如交互、动作等。本文提出了ActBERT，该结构可以结合全局的动作、局部的目标与文字描述；本文还提出Tangled Transform er Block（TNT）来对三种特征进行编码，通过交错的编码结构提高了多模态特征之间的相互作用，以此提高模型表现；
+* Motivation: BERT在自然语言处理的预训练任务中有着十分优秀的表现，本文基于BERT推广到视频-语言联合任务中，在之前的研究中使用的方法是将视频特征离散化为token，并送入BERT模型，然而这一离散化过程会损失掉无数局部信息，比如交互、动作等。本文提出了ActBERT，该结构可以结合全局的动作、局部的目标与文字描述；本文还提出Tangled Transformer Block（TNT）来对三种特征进行编码，通过交错的编码结构提高了多模态特征之间的相互作用，以此提高模型表现；
 * Model(structure): ActBERT的输入有四类，包括动作、图像区域、文字描述与特殊token，其中特殊token用于区分不同的输入；包含了四种嵌入：位置嵌入、分割嵌入、token嵌入与视觉嵌入，其中位置嵌入提供了对不同动作的时序信息，而物品则采用相同的嵌入；分割嵌入提供了与不同视频切片的对应关系；token嵌入表征了输入信息的模态；视觉输入包括动作与物体，动作使用3D CNN，物体使用FastRCNN来确定物体的坐标信息输入。
 * Model(detail): ActBERT还提出了一种TNT的transformer结构，这种结构将视觉信息和语言信息有效的结合，通过两个多头注意力模块来进行融合（互相提供Key与Value），并利用一个全局线索来从语言和视觉特征中进行引导（Query），通过跨模态的特征融合，TNT可以动态地选择有效特征进行目标预测；
 * Method(Training): ActBERT的预训练包括四个任务：全局与局部线索的掩码语言建模、掩码动作分类、掩码目标分类与跨模态匹配，其中全局与局部线索的掩码语言建模与BERT类似，对于语言的输入进行随机Mask，要求模型利用视觉信息来提供缺失的信息；掩码的动作、目标分类使用掩码的动作特征与目标特征，模型分别来通过信息预测动作分类与空间分布；跨模态匹配使用线性输出层，通过语句和视觉特征的相关性来表征匹配相关性。
 
 #### [CVPR2021] Less is more: Clipbert for video-and-language learning via sparse sampling
 
-CLIPBERT指出目前训练多模态模型所使用的动作识别、目标检测网络都是单模态的，这样提取到的特征往往不能很好的适应多模态训练任务，且之前的研究使用全部视频序列作为输入信息冗余太大且占据了大量无效的计算资源。CLIPBERT 就是一种使用稀疏采样的视频-语言预训练模型，通过对视频稀疏采样到少量的片段并使用全局平均池化对视频片段进行压缩，可以把视频的时序信息压缩到尽可能少的图片组中，以此通过 less-is-more 原则利用二维卷积神经网络进行特征提取，这 样一种方法可以有效地节约计算资源，提升训练效率，并且可以支持端到端训练而非锁定特征提取器的方法，使提取器可以适应多模态任务。
+CLIPBERT指出目前训练多模态模型所使用的动作识别、目标检测网络都是单模态的，这样提取到的特征往往不能很好的适应多模态训练任务，且之前的研究使用全部视频序列作为输入信息冗余太大且占据了大量无效的计算资源。CLIPBERT 就是一种使用稀疏采样的视频-语言预训练模型，通过对视频稀疏采样到少量的片段并使用全局平均池化对视频片段进行压缩，可以把视频的时序信息压缩到尽可能少的图片组中，以此通过 less-is-more 原则利用二维卷积神经网络进行特征提取，这样一种方法可以有效地节约计算资源，提升训练效率，并且可以支持端到端训练而非锁定特征提取器的方法，使提取器可以适应多模态任务。
 
 #### [CVPR2021] Frozen in time: A joint video and image encoderfor end-to-end retrieval
 
@@ -462,8 +462,6 @@ Frozen是使用与 ViT 类似的思路来进行对视频数据的处理，引入
 
 对于MCQ任务，本文的设计是在Caption中找到动词与名词，并通过遮蔽来构造动词问题与名词问题，通过两种模态的编码器TextFormer与VideoFormer可以获得每层的$\{z\}_{verb\_q}$/$\{z\}_{noun\_q}$与$\{z\}_v$以前者作为Query，后者作为Key/Value，通过一个BridgeFormer即可实现特征融合，在BF的输出端通过对比学习的方式找到正确的答案，通过名词问题可以帮助模型捕捉空间信息，通过动词问题可以帮助模型捕捉动态信息。
 模型一共三种损失：跨模态、动词与名词NCE Loss，分别代表了两种模态通过TF/VF的特征之间，BF关于问题输入的特征与答案特征之间的余弦相似度对比损失。
-
-对于网络的预训练，本文对VF使用ViT在ImageNet-21k上的权重初始化，TF则使用DistilBERT在WikiTBC的预训练权重，采取了与Frozen in Time一样的方法利用Transformer的灵活输入特点在CC3M（单帧图片集)与WebVid-2M（多帧视频集）上对VF、TF与BF三者的组合体进行预训练。在对词汇编码的过程中本文使用一种独特的方法：由于TF是对文本段落进行编码的，当对一个单词编码时往往会失效，所以本文选择了Prompt方法为词汇添加了一些[MASK]来形成伪句，效果有略微提升。
 
 <span id="MCP">
 
@@ -626,7 +624,19 @@ Google的文章，充斥着暴力美学。文章指出现有工作都是基于�
 
 3、条件语言掩码重建：由于除了对比损失中使用的是完整的英文/中文输入，对于特征融合部分使用的是掩码过的文本，所以这里还有一个对掩码文本的重建损失。
 
-模型表现还是非常好的，可以相比其他多语多模态模型如UNITER、M3P、UC2有更快的收敛速度和模型表现.
+模型表现还是非常好的，可以相比其他多语多模态模型如UNITER、M3P、UC2有更快的收敛速度和模型表现。
+
+#### Generalizing Multimodal Pre-training into Multilingual via Language Acquisition
+
+本文把多语言学习的过程看成两个过程的结合，首先定义多模态数据中在语言模态最为充分的英语作为Native Language，将多语言学习（Multilingual Language Acquisition, MLA）作为一个以英文与图像为中心的多语迁移环境，对于一门新语言的学习，首先需要建立多语言之间词与词的对应关系，即母语迁移（Native Language Transfer），这好比背单词的过程。之后随着对于新语言的熟悉，要建立新语言与其他模态（视觉）之间的联系，这一过程被称为语言暴露（Language Exposure），通过这两种方法的学习，就可以实现对于新语言的迁移。
+
+<div style="text-align: center;">
+
+<img src="./images/gmp.png" width="800" height="XXX" />
+
+</div>
+
+在模型结构上使用一个三流的编码器，文本和图像都是用Frozen Layer不参与学习过程，对于新语言则采用一个新的编码器与英语的Transformer Encoder（Frozen），在每一个Transformer Layer之后添加一个可学习的Language Acquirer来学习新语言，训练分为两个步骤，首先在双语之间使用知识蒸馏的方法构建MSE损失来使带有Acquirer的结构获得与英文一致的编码方式，之后第二个步骤则是对于语言暴露使用i2t和t2i的共轭损失来进行对比学习，通过这两个阶段可以使模型获得很好的多语多模态检索能力。
 
 <span id="PROMPT">
 
@@ -680,3 +690,21 @@ Tokens。使用的数据是一些Labeled Source Images与一些Unlabeled Target 
 </div>
 
 模型表现还不错，相比一些传统的MIM任务模型比如BEIT或者MAE，其可以在相同backbone、更短的预训练周期下达到最好的结果。
+
+#### [ICLR2021] Vision Transformer with Deformable Attention
+
+提出了一种基于ViT的可变自注意力结构，文章指出现在的注意力模型如ViT使用致密的全局自注意力，会浪费大量计算资源在周遭环境和无效信息上，SwinTransformer的结构则是一种对所有数据同质化的稀疏注意力，且没有长距离的相关，本文基于可变卷积的方法提出了可变注意力
+
+<div style="text-align: center;">
+
+<img src="./images/dat.png" width="800" height="XXX" />
+
+</div>
+
+本文的可变注意力方法如图所示，首先对于输入特征图经过$1\times1$线性变换获得一个Query阵。并同时初始化一个$W/r\times H/r$的相关点矩阵，将Query阵送入一个$\theta_{offset}$网络就可以获得模型相关点矩阵的Offset $\theta\in\mathbb{R}^{H/r\times W/r\times 2}$，两个通道分别代表x与y轴坐标，之后对相关点进行变换然后双线性插值提取特征获得Key与Value，引入与Swin类似的相关点偏差Relative Position Bias来进行辅助学习，最后的输出如下：
+
+$$
+z^{(m)}=\sigma(q^{(m)}\hat{k}^{(m)T}/\sqrt{d}+\phi(\hat{B};R))\hat{v}^{(m)}
+$$
+
+通过这样一种方式来实现对于可变注意力的学习，相比Swin的计算复杂度有略微增加，表现提升较大。本文没有在最开始就使用DAT模块，而是先用Swin学习局部特征，之后在深度特征空间使用DAT来进行可变注意力学习。
