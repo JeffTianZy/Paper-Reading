@@ -56,6 +56,7 @@
 - [x] Wukong: 100 Million Large-scale Chinese Cross-modal Pre-training Dataset and A Foundation Framework
 - [x] Delving Deeper into Cross-lingual Visual Question Answering
 - [x] Cross-View Language Modeling: Towards Unified Cross-Lingual Cross-Modal Pre-training
+- [x] Generalizing Multimodal Pre-training into Multilingual via Language Acquisition
 
 ### [Visual Prompt](#PROMPT)
 
@@ -66,8 +67,8 @@
 ### [Others](#OTHER)
 
 - [x] [Arxiv2022] MVP: Multimodality-guided Visual Pre-training
-- [ ] [Arxiv2022] Deformable Transformers for End-to-end Object Detection
-- [ ] [ICLR2021] Vision Transformer with Deformable Attention
+- [x] [Arxiv2022] Deformable Transformers for End-to-end Object Detection
+- [x] [ICLR2021] Vision Transformer with Deformable Attention
 
 ## 笔记
 
