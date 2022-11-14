@@ -8,6 +8,7 @@
 - [x] [ACL2020] Emerging Cross-lingual Structure in Pretrained Language Models
 - [x] [ICLR2020] Cross-Lingual Ability of Multilingual BERT: an Empirical Study
 - [x] [Arxiv2021] Pre-trained Models for Natural Language Processing: A Survey
+- [x] [Arxiv2022] English Contrastive Learning Can Learn Universal Cross-lingual Sentence Embeddings
 
 ### [Image/Video Captioning](#IVC)
 
@@ -207,6 +208,32 @@ $$
 
 可以看出似然值的变化即两子词互信息，则合并的两子词需具有最大的互信息，其在句子中的关联性最强。
 
+<span id="MPM">
+
+## Multilingual Pretraining Model
+
+</span>
+
+#### [Arxiv2022] English Contrastive Learning Can Learn Universal Cross-lingual Sentence Embeddings
+
+全局跨语言嵌入往往会将语义相似的语句嵌入共享的隐空间，而这一过程往往需要对齐的有监督跨语言文本对来进行训练。而本文则发现通过对英语一种语言的$mSimCSE$对比学习就可以实现很高质量的跨语言，这一发现十分令人惊讶。
+
+SimCSE是batch对比学习的损失函数：$\mathcal{L}_i=-log\displaystyle\frac{e^{sim(h_i,h_i^+)}}{\sum_{j=1}^Ne^{sim(h_i,h_j^+)}}$
+
+在本文的实验setting下一共有三种$mSimCSE$训练方式：
+
+* 无监督$mSimCSE$：使用不同的dropout mask对相同的句子输入进行数据增强，构筑正样本对
+* 有监督$mSimCSE$：使用翻译获得不同语言的相同语义文本对来构筑正样本对进行对比学习
+* NLI数据有监督$mSimCSE$：使用单语/多语NLI数据集（语义相关/冲突）来构筑正负样本对进行对比学习
+
+基于上述setting本文提出了四种策略，包括无监督$mSimCSE$、英语NLI有监督$mSimCSE$、多语言NLI有监督$mSimCSE$与有监督$mSimCSE$，其中英语/多语NLI是包含了强正负样本的setting而单纯的有监督则使用纯正样本。
+
+实验设置在XLM-RL的基础上使用仅1个epoch来进行迁移学习，在四种设定下都可以在Tatoeba、BUCC等数据集上达到远超基线模型的多语言文本检索效果，其中英语NLI有监督$mSimCSE$的效果最为瞩目，在所有语言上都有了十分明显的提升。
+
+本文还设计了一个分类器来在XLM的下游对输入的文字语言进行分类，结果可以看到在经过对比学习之后，虽然模型仍然可以通过语法结构、部分特殊单词等手段在分类器上达到很高的水平，但是相对使用对比学习之前已经有了很明显的下降，可以证明对比学习在一定程度上降低了语言本身的特征而保留了高维度的语义信息。
+
+从结论上来说，本文认为多语言模型将文本编码进两个解耦合的空间：一个语言独立的空间和一个语言消歧义空间，在另一个维度上看对比学习的作用可能就是拉近失去语言特征的语句而弱化了语言独立空间的作用；本文证明了无限制的增加平行预料不是一种最有效的获得对齐隐空间的方法，而设计一个更具挑战性的对比学习任务可以使模型更高效的学习，同时摆脱了平行语料的限制。
+
 <span id="IVC">
 
 ## Image/Video Captioning
@@ -223,7 +250,6 @@ $$
 * Data Construct: 数据集基于单张图片理解数据集进行构建，首先对数据集里的图片描述使用一个Language Parser来处理成图，并分析该图的主要成分，将具有相同元素的图片构建成集合，并对有相同细节描述的图片构建子集，通过选择比较常见的集合和手动二次筛选来构建数据集。该研究用了Conceptual Captions和Stock Captions两个数据集，最终的数据量为200k/146k。
 
 <div style="text-align: center;">
-
 <img src="./images/cag/1.png" width="300" height="XXX" />
 </div>
 
